@@ -1,0 +1,31 @@
+running egg_info
+creating ../../build/gazebo_controller/gazebo_controller.egg-info
+writing ../../build/gazebo_controller/gazebo_controller.egg-info/PKG-INFO
+writing dependency_links to ../../build/gazebo_controller/gazebo_controller.egg-info/dependency_links.txt
+writing requirements to ../../build/gazebo_controller/gazebo_controller.egg-info/requires.txt
+writing top-level names to ../../build/gazebo_controller/gazebo_controller.egg-info/top_level.txt
+writing manifest file '../../build/gazebo_controller/gazebo_controller.egg-info/SOURCES.txt'
+reading manifest file '../../build/gazebo_controller/gazebo_controller.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../../build/gazebo_controller/gazebo_controller.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/ubuntu/EN613/group_project1/build/gazebo_controller/build
+creating /home/ubuntu/EN613/group_project1/build/gazebo_controller/build/lib
+creating /home/ubuntu/EN613/group_project1/build/gazebo_controller/build/lib/gazebo_controller
+copying gazebo_controller/__init__.py -> /home/ubuntu/EN613/group_project1/build/gazebo_controller/build/lib/gazebo_controller
+running install
+running install_lib
+creating /home/ubuntu/EN613/group_project1/install/gazebo_controller/lib/python3.12/site-packages/gazebo_controller
+copying /home/ubuntu/EN613/group_project1/build/gazebo_controller/build/lib/gazebo_controller/__init__.py -> /home/ubuntu/EN613/group_project1/install/gazebo_controller/lib/python3.12/site-packages/gazebo_controller
+byte-compiling /home/ubuntu/EN613/group_project1/install/gazebo_controller/lib/python3.12/site-packages/gazebo_controller/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/ubuntu/EN613/group_project1/install/gazebo_controller/share/ament_index
+creating /home/ubuntu/EN613/group_project1/install/gazebo_controller/share/ament_index/resource_index
+creating /home/ubuntu/EN613/group_project1/install/gazebo_controller/share/ament_index/resource_index/packages
+copying resource/gazebo_controller -> /home/ubuntu/EN613/group_project1/install/gazebo_controller/share/ament_index/resource_index/packages
+copying package.xml -> /home/ubuntu/EN613/group_project1/install/gazebo_controller/share/gazebo_controller
+running install_egg_info
+Copying ../../build/gazebo_controller/gazebo_controller.egg-info to /home/ubuntu/EN613/group_project1/install/gazebo_controller/lib/python3.12/site-packages/gazebo_controller-0.0.0-py3.12.egg-info
+running install_scripts
+writing list of installed files to '/home/ubuntu/EN613/group_project1/build/gazebo_controller/install.log'
