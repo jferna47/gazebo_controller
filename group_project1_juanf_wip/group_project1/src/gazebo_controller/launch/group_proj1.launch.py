@@ -28,11 +28,19 @@ def generate_launch_description():
     name='GZ_SIM_RESOURCE_PATH',
     value=PathJoinSubstitution([
         pkg_gazebo_controller,
-        'models'
+        'models',
     ])
     )
+
+#    gz_world_path = SetEnvironmentVariable(
+#    name='GZ_SIM_RESOURCE_PATH',
+#    value=PathJoinSubstitution([
+#        pkg_gazebo_controller,
+#        'worlds'
+#    ])
+#    )
     
-    sdf_file = os.path.join(pkg_gazebo_controller,'models','gz_robot.sdf')
+    sdf_file = os.path.join(pkg_gazebo_controller,'models','gz_robot','model.sdf')
 
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
@@ -56,6 +64,8 @@ def generate_launch_description():
     gz_topic = '/model/gz_robot'
     joint_state_gz_topic = '/world/car_world' + gz_topic + '/joint_state'
     link_pose_gz_topic = gz_topic + '/pose'
+    #link_tf_gz_topic = gz_topic + '/tf'
+
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -68,11 +78,12 @@ def generate_launch_description():
             link_pose_gz_topic + '@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             link_pose_gz_topic + '_static@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             # Velocity and odometry (Gazebo -> ROS2)
-            gz_topic + '/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
+            gz_topic + '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
             gz_topic + '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
         ],
         remappings=[
-            (joint_state_gz_topic, 'joint_states'),
+            (joint_state_gz_topic, '/joint_states'),
+            #(link_tf_gz_topic, '/tf'),
             (link_pose_gz_topic, '/tf'),
             (link_pose_gz_topic + '_static', '/tf_static'),
         ],
@@ -94,7 +105,6 @@ def generate_launch_description():
     rviz = Node(
         package='rviz2',
         executable='rviz2'
-        #arguments=['-d', os.path.join(pkg_gazebo_controller)]
     )
 
     diffdrive_controller = Node(
@@ -102,13 +112,21 @@ def generate_launch_description():
             executable='diffdrive_pid',
             name='diffdrive_pid',
             output='screen')
+    
+    #odom_tf = Node(
+    #package='tf2_ros',
+    #executable='static_transform_publisher',
+    #arguments=['0', '0', '0', '0', '0', '0', 'odom', 'world']
+    #)
 
     return LaunchDescription([
         gz_model_path,
-        diffdrive_controller,
+        #gz_world_path,
         rviz_launch_arg,
         gazebo,
         bridge,
         robot_state_publisher,
-        rviz
+        #odom_tf,
+        diffdrive_controller,
+        rviz,
     ])
