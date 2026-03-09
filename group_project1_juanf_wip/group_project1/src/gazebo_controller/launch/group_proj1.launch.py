@@ -21,7 +21,7 @@ def generate_launch_description():
     #with open(urdf, 'r') as infp:
     #    robot_desc = infp.read()
     pkg_gazebo_controller = get_package_share_directory('gazebo_controller')
-    #pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
     #pkg_ros_gz_sim_demo = get_package_share_directory('ros_gz_sim_demos')
 
     sdf_file = os.path.join(pkg_gazebo_controller,'models','gz_robot.sdf')
@@ -36,7 +36,7 @@ def generate_launch_description():
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_controller, 'launch', 'gz_sim.launch.py'),
+            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'),
         ),
         launch_arguments={'gz_args': PathJoinSubstitution([
             pkg_gazebo_controller,
@@ -45,7 +45,7 @@ def generate_launch_description():
         ])}.items(),
     )
 
-    gz_topic = '/model/'
+    gz_topic = '/model/gz_robot'
     joint_state_gz_topic = '/world/car_world' + gz_topic + '/joint_state'
     link_pose_gz_topic = gz_topic + '/pose'
     bridge = Node(
