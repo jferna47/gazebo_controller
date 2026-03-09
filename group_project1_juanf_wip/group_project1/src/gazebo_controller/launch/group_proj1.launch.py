@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, SetEnvironmentVariable
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
@@ -24,6 +24,14 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
     #pkg_ros_gz_sim_demo = get_package_share_directory('ros_gz_sim_demos')
 
+    gz_model_path = SetEnvironmentVariable(
+    name='GZ_SIM_RESOURCE_PATH',
+    value=PathJoinSubstitution([
+        pkg_gazebo_controller,
+        'models'
+    ])
+    )
+    
     sdf_file = os.path.join(pkg_gazebo_controller,'models','gz_robot.sdf')
 
     with open(sdf_file, 'r') as infp:
@@ -40,8 +48,8 @@ def generate_launch_description():
         ),
         launch_arguments={'gz_args': PathJoinSubstitution([
             pkg_gazebo_controller,
-            'models',
-            'gz_robot.sdf'
+            'worlds',
+            'gz_world.sdf'
         ])}.items(),
     )
 
@@ -85,11 +93,19 @@ def generate_launch_description():
 
     rviz = Node(
         package='rviz2',
-        executable='rviz2',
-        arguments=['-d', os.path.join(pkg_gazebo_controller)]
+        executable='rviz2'
+        #arguments=['-d', os.path.join(pkg_gazebo_controller)]
     )
 
+    diffdrive_controller = Node(
+            package='gazebo_controller',
+            executable='diffdrive_pid',
+            name='diffdrive_pid',
+            output='screen')
+
     return LaunchDescription([
+        gz_model_path,
+        diffdrive_controller,
         rviz_launch_arg,
         gazebo,
         bridge,
