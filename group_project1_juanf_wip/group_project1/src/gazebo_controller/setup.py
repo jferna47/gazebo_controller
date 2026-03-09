@@ -13,7 +13,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
-        (os.path.join('share', package_name), glob('models/*')),
+        (os.path.join('share', package_name, 'models'), glob(os.path.join('models','*.sdf'))), #glob('models/*')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
