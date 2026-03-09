@@ -20,7 +20,7 @@ def generate_launch_description():
     #    urdf_file_name)
     #with open(urdf, 'r') as infp:
     #    robot_desc = infp.read()
-    pkg_gazebo_controller = get_package_share_directory('gazebo_contoller')
+    pkg_gazebo_controller = get_package_share_directory('gazebo_controller')
     #pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
     #pkg_ros_gz_sim_demo = get_package_share_directory('ros_gz_sim_demos')
 
