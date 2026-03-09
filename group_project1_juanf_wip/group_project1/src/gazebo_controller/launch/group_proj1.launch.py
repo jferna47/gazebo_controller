@@ -21,10 +21,10 @@ def generate_launch_description():
     #with open(urdf, 'r') as infp:
     #    robot_desc = infp.read()
     pkg_gazebo_controller = get_package_share_directory('gazebo_contoller')
-    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
-    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim_demos')
+    #pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    #pkg_ros_gz_sim_demo = get_package_share_directory('ros_gz_sim_demos')
 
-    sdf_file = os.path.join(pkg_gazebo_controller,'models','building_robot.sdf')
+    sdf_file = os.path.join(pkg_gazebo_controller,'models','gz_robot.sdf')
 
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
@@ -36,17 +36,17 @@ def generate_launch_description():
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'),
+            os.path.join(pkg_gazebo_controller, 'launch', 'gz_sim.launch.py'),
         ),
         launch_arguments={'gz_args': PathJoinSubstitution([
-            pkg_ros_gz_sim_demos,
-            'worlds',
-            'vehicle.sdf'
+            pkg_gazebo_controller,
+            'models',
+            'gz_robot.sdf'
         ])}.items(),
     )
 
     gz_topic = '/model/'
-    joint_state_gz_topic = '/world/demo' + gz_topic + '/joint_state'
+    joint_state_gz_topic = '/world/car_world' + gz_topic + '/joint_state'
     link_pose_gz_topic = gz_topic + '/pose'
     bridge = Node(
         package='ros_gz_bridge',
