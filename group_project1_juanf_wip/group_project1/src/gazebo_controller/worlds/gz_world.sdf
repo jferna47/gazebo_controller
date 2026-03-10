@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <sdf version="1.10">
     <world name="car_world">
-        <physics name="1ms" type="ode">
+        <!--
+        <physics name="1ms" type="dart">
             <max_step_size>0.001</max_step_size>
             <real_time_factor>1.0</real_time_factor>
         </physics>
@@ -17,6 +18,7 @@
             filename="gz-sim-scene-broadcaster-system"
             name="gz::sim::systems::SceneBroadcaster">
         </plugin>
+        -->
 
         <light type="directional" name="sun">
             <cast_shadows>true</cast_shadows>
