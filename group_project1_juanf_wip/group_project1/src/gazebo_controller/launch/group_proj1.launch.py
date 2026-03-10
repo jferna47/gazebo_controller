@@ -64,6 +64,7 @@ def generate_launch_description():
     gz_topic = '/model/gz_robot'
     joint_state_gz_topic = '/world/car_world' + gz_topic + '/joint_state'
     link_pose_gz_topic = gz_topic + '/pose'
+    cmd_vel_topic = gz_topic + '/cmd_vel'
     #link_tf_gz_topic = gz_topic + '/tf'
 
     bridge = Node(
@@ -78,7 +79,7 @@ def generate_launch_description():
             link_pose_gz_topic + '@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             link_pose_gz_topic + '_static@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             # Velocity and odometry (Gazebo -> ROS2)
-            gz_topic + '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
+            cmd_vel_topic + '@geometry_msgs/msg/Twist]gz.msgs.Twist',
             gz_topic + '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
         ],
         remappings=[
@@ -86,6 +87,7 @@ def generate_launch_description():
             #(link_tf_gz_topic, '/tf'),
             (link_pose_gz_topic, '/tf'),
             (link_pose_gz_topic + '_static', '/tf_static'),
+            ('/cmd_vel', cmd_vel_topic), 
         ],
         parameters=[{'qos_overrides./tf_static.publisher.durability': 'transient_local'}],
         output='screen'

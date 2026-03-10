@@ -39,7 +39,7 @@
 
         <!--Left wheel-->
         <link name='left_wheel'>
-            <pose>-0.5 0.6 0.4 -1.5707 0 0</pose> <!--angles are in radian-->
+            <pose>0 0.6 0.4 -1.5707 0 0</pose> <!--angles are in radian-->
             <inertial>
                 <mass>2</mass>
                 <inertia>
@@ -76,7 +76,7 @@
 
         <!--The same as left wheel but with different position-->
         <link name='right_wheel'>
-            <pose>-0.5 -0.6 0.4 -1.5707 0 0</pose> <!--angles are in radian-->
+            <pose>0 -0.6 0.4 -1.5707 0 0</pose> <!--angles are in radian-->
             <inertial>
                 <mass>2</mass>
                 <inertia>
@@ -151,29 +151,40 @@
         </link>
         -->
 
-       <joint name='left_wheel_joint' type='revolute'>
-        <parent>chassis</parent>
-        <child>left_wheel</child>
-        <axis>
-          <xyz>0 0 1</xyz>
-          <limit>
-            <lower>-1.79769e+308</lower>
-            <upper>1.79769e+308</upper>
-          </limit>
-        </axis>
-      </joint>
+        <joint name='left_wheel_joint' type='revolute'>
+            <parent>chassis</parent>
+            <child>left_wheel</child>
+            <axis>
+            <xyz>0 0 1</xyz>
+            <limit>
+                <lower>-1.79769e+308</lower>
+                <upper>1.79769e+308</upper>
+            </limit>
+            </axis>
+        </joint>
 
-      <joint name='right_wheel_joint' type='revolute'>
-        <parent>chassis</parent>
-        <child>right_wheel</child>
-        <axis>
-          <xyz>0 0 1</xyz>
-          <limit>
-            <lower>-1.79769e+308</lower>
-            <upper>1.79769e+308</upper>
-          </limit>
-        </axis>
-      </joint>
+        <joint name='right_wheel_joint' type='revolute'>
+            <parent>chassis</parent>
+            <child>right_wheel</child>
+            <axis>
+            <xyz>0 0 1</xyz>
+            <limit>
+                <lower>-1.79769e+308</lower>
+                <upper>1.79769e+308</upper>
+            </limit>
+            </axis>
+        </joint>
+
+        <plugin
+            filename="ignition-gazebo-diff-drive-system"
+            name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <wheel_separation>1.2</wheel_separation>
+            <wheel_radius>0.4</wheel_radius>
+            <odom_publish_frequency>1</odom_publish_frequency>
+        </plugin>
+
     <!--
       <joint name='caster_wheel' type='ball'>
         <parent>chassis</parent>
