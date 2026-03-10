@@ -3,7 +3,7 @@
     <model name='gz_robot' canonical_link="chassis">
         <!--chassis-->
         <link name='chassis'>
-            <pose>0 0 0.4 0 0 0</pose>
+            <pose>0.5 0 0.4 0 0 0</pose>
             <inertial>
                 <mass>1.14395</mass>
                 <inertia>
@@ -112,12 +112,8 @@
         </link>
 
         <!--
-        <frame name="caster_frame" attached_to='chassis'>
-            <pose>0.8 0 -0.2 0 0 0</pose>
-        </frame>
-
         <link name='caster'>
-            <pose relative_to="caster_frame">0 0 0 0 0 0</pose>
+            <pose>0.8 0 -0.2 0 0 0</pose>
             <inertial>
                 <mass>1</mass>
                 <inertia>
@@ -183,13 +179,14 @@
             <wheel_separation>1.2</wheel_separation>
             <wheel_radius>0.4</wheel_radius>
             <odom_publish_frequency>1</odom_publish_frequency>
+            <topic>/cmd_vel</topic>
         </plugin>
 
     <!--
-      <joint name='caster_wheel' type='ball'>
-        <parent>chassis</parent>
-        <child>caster</child>
-      </joint>
-        -->
+        <joint name='caster_wheel' type='fixed'>
+            <parent>chassis</parent>
+            <child>caster</child>
+        </joint>
+    -->
     </model>
 </sdf>

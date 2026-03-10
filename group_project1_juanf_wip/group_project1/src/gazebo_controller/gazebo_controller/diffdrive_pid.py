@@ -70,7 +70,8 @@ class DiffDrivePID(Node):
         self.goal_pose_sub  # prevent unused variable warning
         
         # publisher --> /cmd_vel
-        self.cmd_vel_pub = self.create_publisher(Twist, 'cmd_vel', 10)
+        #self.cmd_vel_pub = self.create_publisher(Twist, '/model/gz_robot/cmd_vel', 10) # 1: Good setup
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # Telling us that node has been initialized and started
         self.node_name = self.get_name()

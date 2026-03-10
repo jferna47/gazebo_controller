@@ -64,7 +64,7 @@ def generate_launch_description():
     gz_topic = '/model/gz_robot'
     joint_state_gz_topic = '/world/car_world' + gz_topic + '/joint_state'
     link_pose_gz_topic = gz_topic + '/pose'
-    cmd_vel_topic = gz_topic + '/cmd_vel'
+    cmd_vel_gz_topic = gz_topic + '/cmd_vel'
     #link_tf_gz_topic = gz_topic + '/tf'
 
     bridge = Node(
@@ -79,7 +79,8 @@ def generate_launch_description():
             link_pose_gz_topic + '@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             link_pose_gz_topic + '_static@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             # Velocity and odometry (Gazebo -> ROS2)
-            cmd_vel_topic + '@geometry_msgs/msg/Twist]gz.msgs.Twist',
+            '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist', # 1: Good setup
+            #cmd_vel_gz_topic + '@geometry_msgs/msg/Twist]gz.msgs.Twist',
             gz_topic + '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
         ],
         remappings=[
@@ -87,7 +88,8 @@ def generate_launch_description():
             #(link_tf_gz_topic, '/tf'),
             (link_pose_gz_topic, '/tf'),
             (link_pose_gz_topic + '_static', '/tf_static'),
-            ('/cmd_vel', cmd_vel_topic), 
+            #('/cmd_vel', cmd_vel_gz_topic)
+            # blank_blank  # 1: Good setup
         ],
         parameters=[{'qos_overrides./tf_static.publisher.durability': 'transient_local'}],
         output='screen'
@@ -115,11 +117,11 @@ def generate_launch_description():
             name='diffdrive_pid',
             output='screen')
     
-    #odom_tf = Node(
-    #package='tf2_ros',
-    #executable='static_transform_publisher',
-    #arguments=['0', '0', '0', '0', '0', '0', 'odom', 'world']
-    #)
+    odom_tf = Node(
+    package='tf2_ros',
+    executable='static_transform_publisher',
+    arguments=['0', '0', '0', '0', '0', '0', 'odom', 'world']
+    )
 
     return LaunchDescription([
         gz_model_path,
@@ -128,7 +130,7 @@ def generate_launch_description():
         gazebo,
         bridge,
         robot_state_publisher,
-        #odom_tf,
+        odom_tf,
         diffdrive_controller,
         rviz,
     ])
