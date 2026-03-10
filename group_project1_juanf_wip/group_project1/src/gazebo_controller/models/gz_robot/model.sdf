@@ -3,7 +3,7 @@
     <model name='gz_robot' canonical_link="chassis">
         <!--chassis-->
         <link name='chassis'>
-            <pose>0.5 0 0.4 0 0 0</pose>
+            <pose>0 0 0.4 0 0 0</pose>
             <inertial>
                 <mass>1.14395</mass>
                 <inertia>
